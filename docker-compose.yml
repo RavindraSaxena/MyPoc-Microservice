@@ -8,11 +8,18 @@ services:
       dockerfile: Dockerfile
     ports:
       - 8080:80
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
 
   mypoc.web:
     image: mypoc.mypocweb:latest
     build: 
-      context: ./MyPoc.Web
+      context: ./MyPoc.WebApp
       dockerfile: Dockerfile
     ports:
-      - 8001:80  
+      - 8001:80 
+    depends_on:
+      - mypoc.api1
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - webapi1url=http://mypoc.api1:80
